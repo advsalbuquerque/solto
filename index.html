@@ -115,6 +115,9 @@ p{line-height:1.5;margin:0}
 .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-3)}
 .switch{display:flex;align-items:center;justify-content:space-between;gap:var(--s-3);padding:var(--s-3) 0;border-bottom:1px solid var(--c-line);min-height:52px}
 .switch:last-child{border-bottom:0}
+.loadbox{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(232,103,60,.14);border:1px solid rgba(232,103,60,.45);border-radius:var(--r-m);padding:10px 12px;margin-bottom:12px;font-size:var(--t-s);text-align:left}
+.loadbox .round.sm{width:40px;height:40px;font-size:22px}
+.loadbox .lb{display:flex;gap:8px;flex:none}
 .switch input{width:24px;height:24px;accent-color:var(--c-accent);flex:none}
 .empty{text-align:center;padding:var(--s-6) var(--s-4);color:var(--c-ink-2)}
 .toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 20px);transform:translateX(-50%);background:var(--c-ink);color:var(--c-bg);padding:12px 18px;border-radius:var(--r-pill);font-size:var(--t-s);z-index:40;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}
@@ -270,6 +273,23 @@ const EX = {
   hs_parede:{t:"for",m:"ombros, equilíbrio",n:"Parada de mão com a barriga para a parede",cue:"Mãos no chão a um palmo da parede, suba os pés pela parede até o corpo ficar quase reto. Desça pelo mesmo caminho."},
   hs_toque:{t:"for",m:"ombros, equilíbrio",n:"Toques no ombro na parada da parede",cue:"Na parada com a barriga para a parede, passe o peso para uma mão e toque o ombro com a outra. Alterne."},
   hs_livre:{t:"for",m:"ombros, equilíbrio",n:"Parada de mão livre (tentativas)",cue:"Em espaço livre, chute para a parada e tente segurar. Para sair, gire o quadril e desça com um pé de cada vez."},
+  // força com carga — só entram no plano se você tiver o equipamento
+  bb_agach:{t:"for",eq:"bb",m:"quadríceps, glúteos",n:"Agachamento com barra nas costas",cue:"Barra no suporte na altura do peito. Encaixe no alto das costas (não no pescoço), saia do suporte e desça com o quadril para trás até onde mantiver a coluna reta. Suba empurrando o chão."},
+  bb_zercher:{t:"for",eq:"bb",m:"quadríceps, glúteos, abdômen",n:"Agachamento Zercher (sem suporte)",cue:"Tire a barra do chão até as coxas, encaixe-a na dobra dos cotovelos junto ao corpo e agache com o peito alto. Uma toalha nos braços deixa mais confortável."},
+  bb_terra_rom:{t:"for",eq:"bb",m:"posteriores da coxa, glúteos, lombar",n:"Levantamento terra romeno",cue:"Barra nas mãos, joelhos levemente dobrados. Leve o quadril para trás deslizando a barra rente às coxas até alongar atrás da coxa, costas retas. Volte apertando os glúteos."},
+  bb_remada:{t:"for",eq:"bb",m:"costas, bíceps",n:"Remada curvada com barra",cue:"Tronco inclinado à frente uns 45°, costas retas e joelhos dobrados. Puxe a barra até o umbigo aproximando as escápulas e desça controlando."},
+  bb_desenv:{t:"for",eq:"bb",m:"ombros, tríceps",n:"Desenvolvimento em pé com barra",cue:"Barra à frente dos ombros, abdômen e glúteos firmes. Empurre para cima da cabeça até esticar os braços e desça devagar até o peito."},
+  bb_supino:{t:"for",eq:"bb",m:"peito, ombros, tríceps",n:"Supino com barra (banco ou chão)",cue:"Deitado no banco ou no chão, barra acima do peito. Desça até tocar o peito (no chão, até os cotovelos tocarem o chão) e empurre de volta."},
+  bb_hip:{t:"for",eq:"bb",m:"glúteos, posteriores",n:"Elevação de quadril com barra",cue:"Escápulas no banco ou no sofá, barra sobre o quadril com uma toalha dobrada. Suba até o tronco ficar paralelo ao chão e aperte os glúteos 1 s em cima."},
+  bb_rosca:{t:"for",eq:"bb",m:"bíceps",n:"Rosca direta com barra longa",cue:"Em pé, pegada na largura dos ombros, cotovelos colados no corpo. Suba sem balançar o tronco e desça em 2 s."},
+  hal_goblet:{t:"for",eq:"hal",m:"quadríceps, glúteos",n:"Agachamento goblet com halter",cue:"Segure o halter em pé junto ao peito. Desça com o peito alto, cotovelos entre os joelhos, e suba empurrando o chão."},
+  hal_remada:{t:"for",eq:"hal",m:"costas, bíceps",n:"Remada unilateral com halter",cue:"Mão e joelho de um lado apoiados no banco ou numa cadeira firme, costas retas. Puxe o halter até a cintura com o cotovelo rente ao corpo."},
+  hal_desenv:{t:"for",eq:"hal",m:"ombros, tríceps",n:"Desenvolvimento com halter",cue:"Em pé ou sentado, halter na altura do ombro. Empurre para cima até esticar o braço, sem arquear a lombar."},
+  hal_rosca:{t:"for",eq:"hal",m:"bíceps, antebraço",n:"Rosca com halter",cue:"Cotovelo colado no corpo, suba o halter girando a palma para cima e desça em 2 s."},
+  hal_triceps:{t:"for",eq:"hal",m:"tríceps",n:"Tríceps francês com halter",cue:"Segure o halter com as duas mãos atrás da cabeça. Estique os braços para cima com os cotovelos apontando para a frente."},
+  hal_stiff:{t:"for",eq:"hal",m:"posteriores da coxa, glúteos, equilíbrio",n:"Terra romeno com halter numa perna",cue:"Halter na mão do lado oposto à perna de apoio. Incline o tronco à frente levando a outra perna para trás, costas retas, até alongar atrás da coxa. Volte devagar."},
+  sb_rosca:{t:"for",eq:"sb",m:"bíceps",n:"Rosca direta com barra curta",cue:"Em pé, cotovelos colados no corpo. Suba a barra sem balançar o tronco e desça em 2 s."},
+  sb_triceps:{t:"for",eq:"sb",m:"tríceps",n:"Tríceps testa com barra curta",cue:"Deitado no chão ou no banco, barra acima do rosto com braços esticados. Dobre só os cotovelos levando a barra perto da testa e estique de volta."},
   // condicionamento
   polich:{t:"car",n:"Polichinelo",cue:"Abra e feche pernas e braços em ritmo, aterrissando macio na ponta dos pés."},
   agachS:{t:"car",n:"Agachamento com salto",cue:"Agache e salte, aterrissando com os joelhos macios e já descendo para o próximo."},
@@ -353,7 +373,7 @@ const FOCI={pescoco:"Pescoço e ombros",coluna:"Coluna",quadril:"Quadril",pernas
 
 /* ================= DADOS (local) ================= */
 const KEY="solto.v1";
-const DEF={name:"",level:"intermediario",voice:true,beeps:true,live:"",community:"",enroll:{},done:[],profile:null,skills:{},sets:[],rec:{},body:[],habits:{},custom:[],nutri:{}};
+const DEF={name:"",level:"intermediario",voice:true,beeps:true,music:true,live:"",community:"",enroll:{},done:[],profile:null,skills:{},sets:[],rec:{},body:[],habits:{},custom:[],nutri:{},equip:null,loads:{},wrep:{}};
 let S=load();
 function load(){try{const r=localStorage.getItem(KEY);const o=r?JSON.parse(r):{};const s=Object.assign(JSON.parse(JSON.stringify(DEF)),o);return s;}catch(e){return JSON.parse(JSON.stringify(DEF));}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
@@ -377,7 +397,7 @@ function chainCap(c){const pr=P0();if(c==="legs"&&pr.limits.includes("joelho"))r
 function stepOf(c){if(c==="PULL")c=pullKey();return Math.min(S.skills[c]||0,chainCap(c));}
 function stepEx(c){if(c==="PULL")c=pullKey();const st=CH[c].steps[stepOf(c)];return {c,i:stepOf(c),id:st[0],target:st[1],sides:st[2]||1,unit:st[3]||"r"};}
 function goalCfg(){const g=P0().goal,m=P0().minutes;let sets={musculo:4,definicao:3,mobilidade:2,saude:3}[g]||3;const rest={musculo:90,definicao:45,mobilidade:60,saude:60}[g]||60;
-  if(m>=45)sets++;if(m<=20)sets=Math.max(2,sets-1);return {sets,rest};}
+  if(m>=45&&!hasGear())sets++;if(m<=20)sets=Math.max(2,sets-1);return {sets,rest};}
 const lowImpact=()=>{const p=P0();return p.level==="basico"||p.limits.includes("joelho");};
 function warm(short){return short?[["resp",20,1],["quadcir",30,1],["ombcir",20,2]]:[["resp",30,1],["quadcir",30,1],["ombcir",20,2],["gato",40,1],["punho",30,1]];}
 const COOL=[["pombo",30,2],["pedal",30,2],["fecha",40,1]];
@@ -390,11 +410,50 @@ function focusBlocks(){const f=P0().focus,b=[];
   return b;}
 function circuitBlocks(){const m=P0().minutes,rounds=m>=45?4:m>=30?3:2;const mv=lowImpact()?["marcha","agachT","mclimbL","passoLat","pranchaT"]:["polich","agachS","mclimb","skater","burpee"];
   const out=[];for(let r=0;r<rounds;r++){mv.forEach(x=>out.push([x,40,1]));if(r<rounds-1)out.push(["descanso",45,1]);}return out;}
+/* ================= EQUIPAMENTOS E CARGA ================= */
+const PLATES=["1.25","2.5","5","10","15","20"];
+const EQ0=()=>({barra:!!(S.profile&&S.profile.bar),bb:false,bbKg:null,rack:false,banco:false,hal:0,halKg:null,sb:false,sbKg:null,plates:{}});
+const EQ=()=>S.equip||EQ0();
+function gear(){const e=EQ();return {bb:!!e.bb,rack:!!(e.bb&&e.rack),hal:(+e.hal||0)>0,hal2:(+e.hal||0)>=2,sb:!!e.sb,banco:!!e.banco};}
+const hasGear=()=>{const g=gear();return g.bb||g.hal||g.sb;};
+function wRange(){return {musculo:[8,12],definicao:[12,15],saude:[10,12],mobilidade:[10,12]}[P0().goal]||[10,12];}
+function wTarget(id){const r=wRange();return Math.max(r[0],Math.min(r[1],S.wrep[id]||r[0]));}
+function wSides(id){if(id==="hal_remada"||id==="hal_stiff")return 2;if((id==="hal_desenv"||id==="hal_rosca")&&!gear().hal2)return 2;return 1;}
+// cargas possíveis na barra longa: [kg de cada lado, [anilhas de cada lado]] — só pares iguais
+function combos(){const e=EQ();const pairs=[];PLATES.slice().reverse().forEach(kg=>{const n=Math.floor((+(e.plates||{})[kg]||0)/2);for(let i=0;i<n;i++)pairs.push(+kg);});
+  const m=new Map([[0,[]]]);pairs.forEach(p=>{const add=[];m.forEach((v,k)=>{const nk=Math.round((k+p)*100)/100;if(!m.has(nk))add.push([nk,[...v,p]]);});add.forEach(([k,v])=>m.set(k,v));});
+  return [...m.entries()].sort((a,b)=>a[0]-b[0]);}
+const WF={bb_agach:.9,bb_zercher:.5,bb_terra_rom:.8,bb_remada:.6,bb_desenv:.35,bb_supino:.6,bb_hip:.9,bb_rosca:.3};
+function curLoad(id){if(EX[id].eq!=="bb")return null;const c=combos();if(S.loads[id]!=null){const ok=c.filter(x=>x[0]<=S.loads[id]+1e-6);return ok.length?ok[ok.length-1][0]:0;}
+  const max=c[c.length-1][0],mult={basico:.5,intermediario:.75,avancado:1}[P0().level]||.75,want=max*(WF[id]||.5)*mult;const ok=c.filter(x=>x[0]<=want+1e-6);return ok.length?ok[ok.length-1][0]:0;}
+const num=n=>nf(n,2).replace(/,00$/,"").replace(/(,\d)0$/,"$1");const kg=n=>num(n)+" kg";
+function loadLabel(id,short){const e=EQ(),x=EX[id];if(!x||!x.eq)return "";
+  if(x.eq==="hal")return (+e.halKg?`Halter de ${kg(+e.halKg)}`:"Halter (informe o peso em Equipamentos)")+(gear().hal2&&wSides(id)===1&&id!=="hal_goblet"&&id!=="hal_triceps"?", um em cada mão":"");
+  if(x.eq==="sb")return +e.sbKg?`Barra curta com ${kg(+e.sbKg)}`:"Barra curta (informe o peso em Equipamentos)";
+  const ps=curLoad(id),c=combos().find(z=>z[0]===ps),pl=c?c[1]:[];
+  if(!ps)return +e.bbKg?`Só a barra (${kg(+e.bbKg)})`:"Só a barra";
+  const side=`${pl.map(num).join(" + ")} kg de cada lado`;if(short)return side;
+  return `${side} · ${+e.bbKg?"total "+kg(2*ps+(+e.bbKg)):kg(2*ps)+" + barra"}`;}
+function loadAdj(id,dir){const c=combos().map(x=>x[0]);const i=c.indexOf(curLoad(id));const j=Math.max(0,Math.min(c.length-1,i+dir));S.loads[id]=c[j];save();if(P)drawPlayer();else render();}
+function nextLoad(id){const c=combos().map(x=>x[0]);const i=c.indexOf(curLoad(id));return i>=0&&i<c.length-1?c[i+1]:null;}
+function gearSlots(){const g=gear(),lim=P0().limits;
+  return {legsW:g.rack?"bb_agach":g.bb?"bb_zercher":g.hal?"hal_goblet":null,
+    postW:lim.includes("lombar")?(g.bb?"bb_hip":null):g.bb?"bb_terra_rom":g.hal?"hal_stiff":null,
+    remadaW:lim.includes("lombar")?(g.hal?"hal_remada":null):g.bb?"bb_remada":g.hal?"hal_remada":null,
+    ombroW:lim.includes("ombro")?null:g.bb?"bb_desenv":g.hal?"hal_desenv":null,
+    pushW:g.bb?"bb_supino":null,roscaW:g.sb?"sb_rosca":g.hal?"hal_rosca":g.bb?"bb_rosca":null,tricW:g.sb?"sb_triceps":g.hal?"hal_triceps":null};}
+function strengthBlocks(type){const s=gearSlots(),W=id=>id?{w:id}:null;let list;
+  if(type==="forcaA")list=[W(s.legsW)||{c:"legs"},{c:"push"},W(s.ombroW),{c:"core"},W(s.pushW),W(s.tricW)];
+  else if(type==="forcaB")list=[{c:"PULL"},W(s.postW)||{c:"post"},W(s.remadaW),{c:"core"},W(s.roscaW),s.postW!=="bb_hip"&&gear().bb?{w:"bb_hip"}:null];
+  else list=[W(s.legsW)||{c:"legs"},{c:"PULL"},{c:"push"},{c:"core"},W(s.postW),W(s.remadaW),W(s.ombroW),W(s.roscaW)];
+  list=list.filter(Boolean);if(!hasGear())return list;
+  // com equipamento: no mínimo 3 exercícios; vai somando enquanto couber no tempo escolhido
+  const m=P0().minutes,base=[...warm(m<=20),...COOL];let out=list.slice(0,3);
+  for(const b of list.slice(3)){const t=[...out,b];if(lessonSeconds({blocks:[...base,...t]})<=m*60*1.1)out=t;else break;}
+  return out;}
 function buildSession(type){
   const short=P0().minutes<=20;let blocks;
-  if(type==="forcaA")blocks=[...warm(short),{c:"push"},{c:"legs"},{c:"core"},...COOL];
-  else if(type==="forcaB")blocks=[...warm(short),{c:"PULL"},{c:"post"},{c:"core"},...COOL];
-  else if(type==="corpo")blocks=[...warm(short),{c:"push"},{c:"PULL"},{c:"legs"},{c:"core"},...COOL];
+  if(type==="forcaA"||type==="forcaB"||type==="corpo")blocks=[...warm(short),...strengthBlocks(type),...COOL];
   else if(type==="circuito")blocks=[...warm(true),...circuitBlocks(),...COOL];
   else if(type==="mob"){let base=[["resp",30,1],["gato",50,1],["rotq",30,2],["quadcir",40,1],["agachrot",40,1],["noventa",50,1],["ombcir",25,2],["punho",40,1],["levant",40,1]];
     const fb=focusBlocks();base=[...base.slice(0,short?5:9),...fb.slice(0,short?2:6),["fecha",50,1]];blocks=base;}
@@ -413,7 +472,8 @@ function steps(lesson){
       if(sides===2){out.push({type:"time",id,sec:s,side:"Lado direito"});out.push({type:"time",id,sec:s,side:"Lado esquerdo"});}
       else out.push({type:"time",id,sec:s,side:""});return;}
     if(b.c){const e=stepEx(b.c);const n=b.sets||cfg.sets;for(let k=1;k<=n;k++)out.push({type:"set",id:e.id,chain:e.c,stepIdx:e.i,set:k,sets:n,target:e.target,unit:e.unit,sides:e.sides,rest:cfg.rest});return;}
-    if(b.x){const n=b.sets||cfg.sets;for(let k=1;k<=n;k++)out.push({type:"set",id:b.x,chain:null,set:k,sets:n,target:b.reps||10,unit:b.unit||"r",sides:b.sides||1,rest:b.rest||cfg.rest});}
+    if(b.w){const n=b.sets||cfg.sets,t=wTarget(b.w),sd=wSides(b.w),top=wRange()[1];for(let k=1;k<=n;k++)out.push({type:"set",id:b.w,chain:null,w:true,auto:true,top,set:k,sets:n,target:t,unit:"r",sides:sd,rest:cfg.rest});return;}
+    if(b.x){const n=b.sets||cfg.sets,w=!!EX[b.x].eq;for(let k=1;k<=n;k++)out.push({type:"set",id:b.x,chain:null,w,auto:false,set:k,sets:n,target:b.reps||10,unit:b.unit||"r",sides:b.sides||1,rest:b.rest||cfg.rest});}
   });return out;}
 const TRANS=6;
 function lessonSeconds(lesson){return steps(lesson).reduce((a,s)=>a+(s.type==="time"?s.sec+TRANS:(s.unit==="s"?s.target:s.target*3.5)*s.sides+s.rest),0);}
@@ -423,7 +483,8 @@ function summarize(lesson){ // linhas da sequência para a tela de detalhe
     if(b==="CIRC"){const c=circuitBlocks();rows.push({id:null,n:`Circuito (${c.filter(x=>x[0]!=="descanso").length} estações de 40 s)`,d:fmtMin(c.reduce((a,x)=>a+x[1]+TRANS,0)),tip:"Trabalhe 40 s em cada exercício, num ritmo que você consegue manter até o fim."});return;}
     if(Array.isArray(b)){const e=EX[b[0]];const s=e.t==="car"?b[1]:Math.round(b[1]*lvl().f/5)*5;rows.push({id:b[0],n:e.n,d:b[2]===2?`2 × ${s}s`:`${s}s`,tip:e.p?e.p[lvl().i]:e.cue});return;}
     if(b.c){const e=stepEx(b.c);const n=b.sets||cfg.sets;rows.push({id:e.id,n:EX[e.id].n,d:`${n} × ${e.target}${e.unit==="s"?"s":""}${e.sides===2?" cada":""}`,tip:`Trilha ${CH[e.c].n}, passo ${e.i+1}. Descanso ${cfg.rest}s.`,chain:e.c});return;}
-    if(b.x){const n=b.sets||cfg.sets;rows.push({id:b.x,n:EX[b.x].n,d:`${n} × ${b.reps}${b.unit==="s"?"s":""}`,tip:EX[b.x].cue});}
+    if(b.w){const n=b.sets||cfg.sets,sd=wSides(b.w);rows.push({id:b.w,n:EX[b.w].n,d:`${n} × ${wTarget(b.w)}${sd===2?" cada":""}`,tip:`${loadLabel(b.w)}. Descanso ${cfg.rest}s.`,w:true});return;}
+    if(b.x){const n=b.sets||cfg.sets;rows.push({id:b.x,n:EX[b.x].n,d:`${n} × ${b.reps}${b.unit==="s"?"s":""}`,tip:EX[b.x].eq?loadLabel(b.x)+". "+EX[b.x].cue:EX[b.x].cue,w:!!EX[b.x].eq});}
   });return rows;}
 const isDone=(slug,i)=>S.done.some(d=>d.p===slug&&d.n===i);
 const doneOn=(k,date)=>S.done.some(d=>d.k===k&&d.date===date);
@@ -474,12 +535,14 @@ const QUIZ=[
  {k:"core",t:"Quanto tempo você segura uma prancha no antebraço?",s:"Teste de nível",o:[[0,"Menos de 20 s"],[1,"20 a 45 s"],[2,"45 s a 1min30"],[3,"Mais de 1min30"]]},
  {k:"bar",t:"Você tem uma barra fixa para pendurar?",o:[[true,"Tenho barra","Em casa, no prédio ou na praça"],[false,"Não tenho","O Solto usa mesa e toalha para os treinos de puxar"]]},
  {k:"pull",t:"Quantas barras fixas você faz?",s:"Teste de nível",when:a=>a.bar===true,o:[[0,"Nenhuma"],[1,"1 a 3"],[2,"4 a 8"],[3,"9 ou mais"]]},
+ {k:"gear",multi:true,t:"Que outros equipamentos você tem em casa?",s:"O Solto monta os treinos com eles. Os pesos você informa depois, em Equipamentos.",o:[["bb","Barra longa com anilhas","Para agachamento, terra, remada, supino"],["rack","Suporte para a barra","Para tirar a barra na altura do peito"],["hal","Halter","Um ou dois"],["sb","Barra curta","Rosca e tríceps com as duas mãos"],["banco","Banco"]]},
  {k:"focus",multi:true,t:"Onde você quer mais atenção?",s:"Escolha quantas quiser",o:Object.entries(FOCI).map(([k,v])=>[k,v])},
  {k:"limits",multi:true,t:"Tem algum ponto sensível?",s:"Isso ajusta exercícios e alertas. Não substitui avaliação profissional.",o:[["joelho","Joelho"],["lombar","Lombar"],["ombro","Ombro"],["punho","Punho"]]},
  {k:"days",multi:true,days:true,t:"Em quais dias você quer treinar?",s:"De 2 a 6 dias. Os outros viram descanso com mobilidade leve.",o:[[1,"Seg"],[2,"Ter"],[3,"Qua"],[4,"Qui"],[5,"Sex"],[6,"Sáb"],[0,"Dom"]]},
  {k:"minutes",t:"Quanto tempo por treino?",o:[[20,"Cerca de 20 min"],[30,"Cerca de 30 min"],[45,"45 min ou mais"]]}
 ];
-function quizStart(){const p=S.profile;Q={i:0,a:p?{...p,push:null,legs:null,core:null,pull:null}:{focus:[],limits:[],days:[1,3,5]}};}
+function quizStart(){const p=S.profile,e=EQ();const g=[e.bb&&"bb",e.rack&&"rack",(+e.hal>0)&&"hal",e.sb&&"sb",e.banco&&"banco"].filter(Boolean);
+  Q={i:0,a:p?{...p,push:null,legs:null,core:null,pull:null,gear:g}:{focus:[],limits:[],days:[1,3,5],gear:g}};}
 function quizVisible(){return QUIZ.filter(q=>!q.when||q.when(Q.a));}
 function S10(){
   if(!Q)quizStart();const qs=quizVisible();
@@ -492,7 +555,7 @@ function S10(){
   <div class="stack-l"><div class="qbar" aria-hidden="true"><i style="width:${(Q.i+1)/qs.length*100}%"></i></div>
   <div class="stack-s"><h2>${esc(q.t)}</h2>${q.s?`<p class="small muted">${esc(q.s)}</p>`:""}</div>
   <div class="${q.days?"chips wrap":"list"}">${q.days?q.o.map(([val,label])=>`<button class="chip" aria-pressed="${(v||[]).includes(val)}" onclick='quizPick("days",${val})'>${label}</button>`).join(""):opts}</div>
-  ${q.multi?`<button class="btn primary block" ${can?"":"disabled"} onclick="quizNext()">${q.k==="limits"&&!(v||[]).length?"Nenhum, continuar":"Continuar"}</button>`:""}</div>`;
+  ${q.multi?`<button class="btn primary block" ${can?"":"disabled"} onclick="quizNext()">${(q.k==="limits"||q.k==="gear")&&!(v||[]).length?"Nenhum, continuar":"Continuar"}</button>`:""}</div>`;
 }
 function quizPick(k,val){const q=QUIZ.find(x=>x.k===k);if(q.multi){const a=Q.a[k]||[];Q.a[k]=a.includes(val)?a.filter(x=>x!==val):[...a,val];render();return;}Q.a[k]=val;setTimeout(quizNext,120);render();}
 function quizNext(){Q.i++;render();window.scrollTo(0,0);}
@@ -512,12 +575,14 @@ function quizFinish(){
   S.skills.post=S.skills.post??{basico:0,intermediario:1,avancado:2}[lv];
   S.skills.hand=S.skills.hand??0;
   S.profile={goal:a.goal||"saude",level:lv,bar:!!a.bar,focus:a.focus||[],limits:a.limits||[],days:(a.days||[1,3,5]).map(Number),minutes:a.minutes||30};
+  const e=EQ(),g=a.gear||[];S.equip={...e,barra:!!a.bar,bb:g.includes("bb"),rack:g.includes("bb")&&g.includes("rack"),hal:g.includes("hal")?(+e.hal||1):0,sb:g.includes("sb"),banco:g.includes("banco")};
   S.level=lv;save();Q=null;go("#plano");}
 function S10b(){ // resumo do plano
   const pr=P0();const seq=[...pr.days].sort();
   return `${brand}<div class="stack-l"><div class="stack"><p class="small muted">Seu plano está pronto</p><h1>${esc(GOALS[pr.goal])}</h1>
   <p class="muted">${pr.days.length} treinos por semana, cerca de ${pr.minutes} min cada. Os exercícios de força começam no seu nível e sobem quando você bate a meta.</p></div>
   <div class="card stack"><h3>Sua semana</h3>${seq.map(d=>{const t=PLAN_SEQ[pr.goal][seq.indexOf(d)%6];return `<div class="ex"><div style="flex:1"><b>${WD[d]}</b><p class="small muted">${SESS_NAMES[t]}</p></div></div>`}).join("")}</div>
+  ${equipCard()}
   <div class="card stack"><h3>Seu ponto de partida</h3>${["push",pullKey(),"legs","core"].map(c=>{const e=stepEx(c);return `<div class="ex"><div style="flex:1"><b>${CH[c].n}</b><p class="small muted">${esc(EX[e.id].n)}</p></div><div class="d">passo ${e.i+1}/${CH[c].steps.length}</div></div>`}).join("")}</div>
   ${pr.limits.length?`<p class="notice warn">Você marcou ${pr.limits.map(l=>({joelho:"joelho",lombar:"lombar",ombro:"ombro",punho:"punho"}[l])).join(", ")}. O Solto evita saltos${pr.limits.includes("joelho")?" e limita a trilha de pernas":""}, mas dor durante o exercício é sinal para parar. Se a dor for frequente, procure um fisioterapeuta.</p>`:""}
   <a class="btn primary block" href="#hoje">Começar</a></div>`;}
@@ -590,6 +655,7 @@ function S04(key){ // detalhe de qualquer treino
     <div class="stack-s"><span class="small" id="lvl-l" style="font-weight:600">Intensidade da mobilidade</span>
     <div class="seg" role="group" aria-labelledby="lvl-l">${Object.entries(LEVELS).map(([k,v])=>`<button aria-pressed="${S.level===k}" onclick="S.level='${k}';save();render()">${v.n}</button>`).join("")}</div></div>
     <div class="card"><h3 class="sr">Sequência</h3>${rows.map(r=>`<div class="ex"><div style="flex:1"><b>${esc(r.n)}</b><p class="small muted">${esc(r.tip)}</p>${r.chain?`<a class="xs" href="#k-${r.chain}">ver trilha</a>`:""}</div><div class="d">${r.d}</div></div>`).join("")}</div>
+    ${rows.some(r=>r.w)?`<p class="notice">Exercícios com carga: faça antes 1 série leve de aquecimento. A carga aparece em cada série e você ajusta no − e + durante o treino. Bateu ${wRange()[1]} repetições em todas as séries, o Solto sugere subir o peso.</p>`:""}
     ${hasSets?`<p class="notice">Nas séries de força, conte as repetições feitas com boa técnica. Pare 1 ou 2 repetições antes de a forma quebrar.</p>`:""}
     ${lim.length?`<p class="notice warn">Atenção com ${lim.join(", ")}: reduza a amplitude se incomodar e pule o que doer.</p>`:""}
     <p class="notice">Mexa-se dentro do confortável. Dor aguda, formigamento, tontura ou dor no peito: pare. Com lesão ou condição de saúde, converse antes com um profissional.</p>
@@ -638,16 +704,22 @@ function S06(){const r=window.__last;if(!r){go("#hoje");return;}
   const byEx={};(r.log||[]).forEach(x=>{(byEx[x.id]=byEx[x.id]||{...x,vals:[]}).vals.push(x.val);});
   const ups=Object.values(byEx).filter(x=>x.chain&&x.vals.length>=2&&x.vals.every(v=>v>=x.target)&&x.stepIdx<chainCap(x.chain)&&stepOf(x.chain)===x.stepIdx);
   return `${brand}<div class="stack-l"><div class="stack-s" style="text-align:center"><div style="font-size:44px" aria-hidden="true">🌿</div><h1>Treino feito</h1><p class="muted">${esc(r.title)} · ${fmtMin(r.sec)}</p></div>
-  ${Object.keys(byEx).length?`<div class="card"><h3>Suas séries</h3>${Object.values(byEx).map(x=>`<div class="ex"><div style="flex:1"><b>${esc(EX[x.id].n)}</b><p class="small muted">meta ${x.target}${x.unit==="s"?"s":""}${x.sides===2?" cada lado":""}</p></div><div class="d">${x.vals.join(" · ")}</div></div>`).join("")}</div>`:""}
+  ${Object.keys(byEx).length?`<div class="card"><h3>Suas séries</h3>${Object.values(byEx).map(x=>`<div class="ex"><div style="flex:1"><b>${esc(EX[x.id].n)}</b><p class="small muted">meta ${x.target}${x.unit==="s"?"s":""}${x.sides===2?" cada lado":""}${x.load?" · "+esc(x.load):""}</p></div><div class="d">${x.vals.join(" · ")}</div></div>`).join("")}</div>`:""}
   ${ups.map(x=>{const nx=CH[x.chain].steps[x.stepIdx+1];return `<div class="card dark stack"><span class="pill acc">Meta batida</span><p>Você completou todas as séries de <b>${esc(EX[x.id].n)}</b>. Próximo passo da trilha: <b>${esc(EX[nx[0]].n)}</b>.</p><div class="row"><button class="btn primary" onclick="levelUp('${x.chain}',${x.stepIdx})">Subir de passo</button><span class="small muted">ou continue mais uma semana neste</span></div></div>`}).join("")}
+  ${Object.values(byEx).filter(x=>x.w&&x.auto&&x.vals.length>=2&&x.vals.every(v=>v>=x.top)).map(x=>{const e=EX[x.id];
+    if(e.eq==="bb"){const nx=nextLoad(x.id);if(nx!=null&&nx>curLoad(x.id)){const c=combos().find(z=>z[0]===nx);return `<div class="card dark stack"><span class="pill acc">Hora de subir o peso</span><p>Você fez ${x.top} repetições em todas as séries de <b>${esc(e.n)}</b>. Próxima carga: <b>${c[1].map(num).join(" + ")} kg de cada lado</b>, voltando para ${wRange()[0]} repetições.</p><div class="row"><button class="btn primary" onclick="wUp('${x.id}',${nx})">Subir carga</button><span class="small muted">ou fique mais uma semana nesta</span></div></div>`;}}
+    return `<div class="card stack-s"><span class="pill acc">Peso máximo batido</span><p class="small">Você chegou a ${x.top} repetições em <b>${esc(e.n)}</b> com o maior peso que tem. Para continuar evoluindo, desça em 3 segundos e segure 1 segundo embaixo em cada repetição.</p></div>`;}).join("")}
   <div class="card stack"><span id="feel-l" style="font-weight:600">Como o corpo está agora?</span>
   <div class="feel" role="group" aria-labelledby="feel-l">${["😣","😕","🙂","😊","🤩"].map((e,k)=>`<button aria-label="Nota ${k+1}" aria-pressed="${r.feel===k+1}" onclick="__last.feel=${k+1};__last.note=($('#note')||{}).value||'';render()">${e}</button>`).join("")}</div>
   <label class="field"><span>Anotação (opcional)</span><textarea id="note" rows="3" placeholder="Ex.: ombro direito mais firme">${esc(r.note||"")}</textarea></label></div>
   <p class="small muted" style="text-align:center">${S.profile?nextTrainingText():""}</p>
   <button class="btn primary block" onclick="finish()">Salvar e voltar</button></div>`;}
+function wUp(id,ps){S.loads[id]=ps;S.wrep[id]=wRange()[0];if(window.__last)(window.__last.log||[]).forEach(x=>{if(x.id===id)x.auto=false;});save();toast("Carga atualizada para o próximo treino.");render();}
 function levelUp(c,i){S.skills[c]=i+1;save();toast(`Subiu para: ${EX[CH[c].steps[i+1][0]].n}`);render();}
 function finish(){const r=window.__last;r.note=($("#note")||{}).value||"";
   (r.log||[]).forEach(x=>{S.sets.push({date:r.date,id:x.id,val:x.val,unit:x.unit});const cur=S.rec[x.id];if(!cur||x.val>cur.v)S.rec[x.id]={v:x.val,u:x.unit,date:r.date};});
+  const wb={};(r.log||[]).forEach(x=>{if(x.w&&x.auto)(wb[x.id]=wb[x.id]||{t:x.target,top:x.top,v:[]}).v.push(x.val);});
+  Object.entries(wb).forEach(([id,x])=>{if(x.v.length>=2&&x.v.every(v=>v>=x.t)&&x.t<x.top)S.wrep[id]=Math.min(x.top,x.t+2);});
   const {log,...keep}=r;S.done.push(keep);save();window.__last=null;toast(`Salvo! Sequência: ${streak()} ${plural(streak(),"dia","dias")}.`);go("#hoje");}
 
 /* ================= AO VIVO (S07) ================= */
@@ -741,9 +813,11 @@ function S17(){return `${brand}<div class="stack-l"><div class="stack-s"><h1>Gui
 function S09(){const pr=S.profile;
   return `${brand}<div class="stack-l"><h1>Perfil</h1>
   <div class="card stack"><label class="field"><span>Como quer ser chamado</span><input id="f-name" value="${esc(S.name)}" maxlength="40" autocomplete="given-name"></label></div>
-  <div class="card stack-s"><h3>Plano</h3>${pr?`<p class="small muted">${esc(GOALS[pr.goal])} · ${pr.days.map(d=>WD[d]).join(", ")} · ${pr.minutes} min · ${pr.bar?"com barra":"sem barra"}</p>`:`<p class="small muted">Nenhum plano ainda.</p>`}<a class="btn ghost block" href="#quiz" onclick="Q=null">${pr?"Refazer o plano":"Montar meu plano"}</a></div>
+  <div class="card stack-s"><h3>Plano</h3>${pr?`<p class="small muted">${esc(GOALS[pr.goal])} · ${pr.days.map(d=>WD[d]).join(", ")} · ${pr.minutes} min</p>`:`<p class="small muted">Nenhum plano ainda.</p>`}<a class="btn ghost block" href="#quiz" onclick="Q=null">${pr?"Refazer o plano":"Montar meu plano"}</a></div>
+  ${equipCard()}
   <div class="card"><label class="switch"><span>Voz guiando o treino</span><input type="checkbox" id="f-voice" ${S.voice?"checked":""}></label>
-  <label class="switch"><span>Bipes nos últimos 3 segundos</span><input type="checkbox" id="f-beeps" ${S.beeps?"checked":""}></label></div>
+  <label class="switch"><span>Bipes nos últimos 3 segundos</span><input type="checkbox" id="f-beeps" ${S.beeps?"checked":""}></label>
+  <label class="switch"><span>Modo música<br><small class="muted">Não pausa o Spotify: só abaixa o volume na hora do bipe e da voz</small></span><input type="checkbox" id="f-music" ${S.music!==false?"checked":""}></label></div>
   <div class="card stack"><label class="field"><span>Link da sala ao vivo (Meet/Zoom)</span><input id="f-live" type="url" inputmode="url" placeholder="https://meet.google.com/..." value="${esc(S.live)}"></label>
   <label class="field"><span>Link da comunidade (WhatsApp/Telegram)</span><input id="f-com" type="url" inputmode="url" placeholder="https://chat.whatsapp.com/..." value="${esc(S.community)}"></label>
   ${S.community?`<a class="btn ghost block" href="${esc(S.community)}" target="_blank" rel="noopener">Abrir comunidade</a>`:""}</div>
@@ -752,22 +826,61 @@ function S09(){const pr=S.profile;
   <button class="btn ghost block" onclick="exportData()">Copiar progresso (backup)</button>
   <button class="btn ghost block" onclick="ask('Apagar todo o progresso deste aparelho?',()=>{S=JSON.parse(JSON.stringify(DEF));save();render();toast('Progresso apagado.')})">Apagar progresso</button></div></details></div>`;}
 function saveProfile(){const url=v=>{v=v.trim();return v&&!/^https?:\/\//i.test(v)?"https://"+v:v;};
-  S.name=$("#f-name").value.trim();S.voice=$("#f-voice").checked;S.beeps=$("#f-beeps").checked;S.live=url($("#f-live").value);S.community=url($("#f-com").value);save();toast("Perfil salvo.");render();}
+  S.name=$("#f-name").value.trim();S.voice=$("#f-voice").checked;S.beeps=$("#f-beeps").checked;S.music=$("#f-music").checked;audioMode();S.live=url($("#f-live").value);S.community=url($("#f-com").value);save();toast("Perfil salvo.");render();}
 function exportData(){try{navigator.clipboard.writeText(JSON.stringify(S)).then(()=>toast("Progresso copiado."),()=>toast("Não foi possível copiar aqui."));}catch(e){toast("Não foi possível copiar aqui.");}}
 function notFound(){return `${back}<div class="empty stack"><h2>Não encontrado</h2><p>Esse conteúdo não existe.</p><a class="btn ghost" href="#hoje">Ir para o início</a></div>`;}
 
+/* ================= EQUIPAMENTOS (S18) ================= */
+function equipSummary(){const e=EQ(),out=[];if(e.barra)out.push("barra fixa");
+  if(e.bb){const pl=PLATES.filter(k=>+(e.plates||{})[k]>0).map(k=>`${e.plates[k]}× ${num(+k)} kg`);out.push(`barra longa${e.rack?" com suporte":""}${pl.length?" ("+pl.join(", ")+")":""}`);}
+  if(+e.hal>0)out.push(`${+e.hal===1?"1 halter":"2 halteres"}${+e.halKg?" de "+kg(+e.halKg):""}`);if(e.sb)out.push(`barra curta${+e.sbKg?" de "+kg(+e.sbKg):""}`);if(e.banco)out.push("banco");
+  return out;}
+function equipMissing(){const e=EQ();return (e.bb&&!PLATES.some(k=>+(e.plates||{})[k]>=2))||(+e.hal>0&&!+e.halKg)||(e.sb&&!+e.sbKg);}
+function equipCard(){const sm=equipSummary();
+  return `<div class="card stack-s"><h3>Seus equipamentos</h3><p class="small muted">${sm.length?esc(sm.join(" · ")):"Só o peso do corpo (mesa, toalha, cadeira)."}</p>
+  ${equipMissing()?`<p class="notice warn">Falta informar os pesos para o Solto calcular a carga.</p>`:""}<a class="btn ghost block" href="#equipamentos">${sm.length?"Editar equipamentos":"Informar equipamentos"}</a></div>`;}
+function S18(){const e=EQ(),ck=(id,v,label,sub)=>`<label class="switch"><span>${label}${sub?`<br><small class="muted">${sub}</small>`:""}</span><input type="checkbox" id="${id}" ${v?"checked":""} onchange="eqDraft()"></label>`;
+  const c=e.bb?combos():[];
+  return `${back}<div class="stack-l"><div class="stack-s"><h1>Meus equipamentos</h1><p class="muted">Diga o que você tem em casa. O Solto troca exercícios do peso do corpo pelos com carga, calcula o peso de cada série e sugere quando subir.</p></div>
+  <div class="card">${ck("e-barra",e.barra,"Barra fixa","Para pendurar")}${ck("e-banco",e.banco,"Banco")}</div>
+  <div class="card stack-s">${ck("e-bb",e.bb,"Barra longa com anilhas","Agachamento, terra, remada, supino")}
+   <div id="bb-box" class="stack-s" ${e.bb?"":"hidden"}>${ck("e-rack",e.rack,"Suporte para a barra","Sem suporte, o agachamento vira Zercher (barra nos cotovelos)")}
+   <label class="field"><span>Peso da barra sem anilhas (kg, se souber)</span><input id="e-bbkg" type="number" inputmode="decimal" min="0" max="30" step="0.5" value="${e.bbKg??""}" placeholder="Ex.: 8"></label>
+   <p class="small" style="font-weight:600;margin-top:8px">Anilhas: quantas unidades de cada peso você tem no total</p>
+   <div class="fields">${PLATES.map(k=>`<label class="field"><span>${num(+k)} kg</span><input id="e-p${k.replace(".","_")}" type="number" inputmode="numeric" min="0" max="20" value="${(e.plates||{})[k]||""}" placeholder="0"></label>`).join("")}</div>
+   ${c.length>1?`<p class="small muted">Cargas possíveis (anilhas dos dois lados): só a barra, ${c.slice(1).map(x=>kg(2*x[0])).join(", ")}${+e.bbKg?"":" (+ a barra)"}.</p>`:""}</div></div>
+  <div class="card stack-s"><label class="field"><span>Halteres</span><select id="e-hal" onchange="eqDraft()">${[[0,"Não tenho"],[1,"1 halter"],[2,"2 halteres (par)"]].map(([v,l])=>`<option value="${v}" ${+e.hal===v?"selected":""}>${l}</option>`).join("")}</select></label>
+   <div id="hal-box" ${+e.hal>0?"":"hidden"}><label class="field"><span>Peso de cada halter montado (kg)</span><input id="e-halkg" type="number" inputmode="decimal" min="0" max="60" step="0.5" value="${e.halKg??""}" placeholder="Ex.: 10"></label></div></div>
+  <div class="card stack-s">${ck("e-sb",e.sb,"Barra curta","Rosca e tríceps, pegando com as duas mãos")}
+   <div id="sb-box" ${e.sb?"":"hidden"}><label class="field"><span>Peso total da barra curta montada (kg)</span><input id="e-sbkg" type="number" inputmode="decimal" min="0" max="60" step="0.5" value="${e.sbKg??""}" placeholder="Ex.: 10"></label></div></div>
+  <p class="small muted">Se a mesma anilha serve à barra longa e ao halter, conte ela só nas anilhas e informe o halter como você costuma montar.</p>
+  <button class="btn primary block" onclick="saveEquip()">Salvar equipamentos</button>
+  ${hasGear()?`<div class="card stack-s"><h3>Como fica no seu plano</h3>${Object.entries(gearSlots()).filter(([,v])=>v).map(([,id])=>`<div class="ex"><div style="flex:1"><b>${esc(EX[id].n)}</b><p class="small muted">${esc(loadLabel(id))}</p></div></div>`).join("")}</div>`:""}</div>`;}
+function eqDraft(){const on=id=>$("#"+id).checked;$("#bb-box").hidden=!on("e-bb");$("#hal-box").hidden=!(+$("#e-hal").value>0);$("#sb-box").hidden=!on("e-sb");}
+function saveEquip(){const n=id=>{const v=parseFloat(String($("#"+id).value).replace(",","."));return isFinite(v)&&v>0?v:null;},on=id=>$("#"+id).checked;
+  const plates={};PLATES.forEach(k=>{const v=Math.round(n("e-p"+k.replace(".","_"))||0);if(v>0)plates[k]=Math.min(20,v);});
+  const old=EQ();S.equip={barra:on("e-barra"),banco:on("e-banco"),bb:on("e-bb"),rack:on("e-bb")&&on("e-rack"),bbKg:n("e-bbkg"),plates,hal:+$("#e-hal").value||0,halKg:n("e-halkg"),sb:on("e-sb"),sbKg:n("e-sbkg")};
+  if(JSON.stringify(old.plates||{})!==JSON.stringify(plates))S.loads={};
+  if(S.profile)S.profile.bar=S.equip.barra;save();toast("Equipamentos salvos. Seu plano já usa eles.");render();window.scrollTo(0,document.body.scrollHeight);}
+
 /* ================= PLAYER (S05) ================= */
 let P=null;
-function speak(t){if(!S.voice||!("speechSynthesis" in window))return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="pt-BR";speechSynthesis.speak(u);}catch(e){}}
-let AC=null;function beep(f=880,d=.12){if(!S.beeps)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;o.connect(g);g.connect(AC.destination);g.gain.setValueAtTime(.15,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.start();o.stop(AC.currentTime+d);}catch(e){}}
+/* Áudio que convive com o Spotify: no iPhone, o som do app abria uma sessão de "reprodução" que pausava a música.
+   Agora a sessão é "transient" (só abaixa a música no bipe/voz) e o áudio do app é suspenso logo depois de cada bipe. */
+function audioMode(){try{if(navigator.audioSession)navigator.audioSession.type=S.music!==false?"transient":"auto";}catch(e){}}
+function speak(t){if(!S.voice||!("speechSynthesis" in window))return;try{audioMode();speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="pt-BR";speechSynthesis.speak(u);}catch(e){}}
+let AC=null,ACoff=null;
+function acRelease(ms){clearTimeout(ACoff);ACoff=setTimeout(()=>{try{if(AC&&AC.state==="running")AC.suspend();}catch(e){}},ms);}
+function acUnlock(){if(!S.beeps)return;try{audioMode();AC=AC||new(window.AudioContext||window.webkitAudioContext)();const b=AC.createBuffer(1,1,22050),src=AC.createBufferSource();src.buffer=b;src.connect(AC.destination);src.start(0);if(AC.state==="suspended")AC.resume();acRelease(300);}catch(e){}}
+function beep(f=880,d=.12){if(!S.beeps)return;try{audioMode();AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;o.connect(g);g.connect(AC.destination);g.gain.setValueAtTime(.15,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.start();o.stop(AC.currentTime+d);acRelease((d+.4)*1000);}catch(e){}}
 async function wake(on){try{if(on&&"wakeLock" in navigator){P.lock=await navigator.wakeLock.request("screen");}else if(P&&P.lock){P.lock.release();P.lock=null;}}catch(e){}}
 function startPlayer(key){const l=getLesson(key);if(!l)return;$("#toast").classList.remove("on");
   P={key,title:l.t,st:steps(l),k:0,phase:"prep",left:5,dur:5,paused:false,elapsed:0,last:performance.now(),lock:null,log:[],val:0};
   const el=document.createElement("div");el.className="player";el.id="player";el.setAttribute("role","dialog");el.setAttribute("aria-modal","true");el.setAttribute("aria-label","Treino em andamento");
-  document.body.appendChild(el);document.body.style.overflow="hidden";wake(true);announce();drawPlayer();P.raf=requestAnimationFrame(tick);document.addEventListener("keydown",keys);}
+  document.body.appendChild(el);document.body.style.overflow="hidden";acUnlock();wake(true);announce();drawPlayer();P.raf=requestAnimationFrame(tick);document.addEventListener("keydown",keys);}
 const cur=()=>P.st[P.k];
 function announce(){const s=cur(),e=EX[s.id];
-  if(P.phase==="prep")speak(`${P.k===0?"Vamos começar. ":"A seguir, "}${e.n}${s.side?", "+s.side.toLowerCase():""}${s.type==="set"?`. ${s.sets} séries de ${s.target}${s.unit==="s"?" segundos":""}`:""}.`);
+  if(P.phase==="prep")speak(`${P.k===0?"Vamos começar. ":"A seguir, "}${e.n}${s.side?", "+s.side.toLowerCase():""}${s.type==="set"?`. ${s.sets} séries de ${s.target}${s.unit==="s"?" segundos":""}`:""}${s.w?". "+loadLabel(s.id,true).replace(/kg/g,"quilos").replace(/\+/g,"mais"):""}.`);
   else if(P.phase==="work")speak(e.cue);
   else if(P.phase==="set")speak(`${s.set===1?e.n+". ":""}Série ${s.set}. ${s.unit==="s"?"Segure "+s.target+" segundos":"Meta de "+s.target+" repetições"}${s.sides===2?" de cada lado":""}.`);
   else if(P.phase==="rest")speak(`Descanse.`);}
@@ -783,7 +896,7 @@ function tick(now){if(!P)return;const dt=(now-P.last)/1000;P.last=now;
     if(timed){const b=Math.ceil(P.left);P.left-=dt;const a=Math.ceil(P.left);if(a!==b&&a<=3&&a>0)beep(660);if(P.left<=0)advance();}
     updateTime();}
   P.raf=requestAnimationFrame(tick);}
-function logSet(val){const s=cur();P.log.push({id:s.id,chain:s.chain,stepIdx:s.stepIdx,target:s.target,unit:s.unit,sides:s.sides,val:Math.max(0,Math.round(val))});}
+function logSet(val){const s=cur();P.log.push({id:s.id,chain:s.chain,stepIdx:s.stepIdx,target:s.target,unit:s.unit,sides:s.sides,w:!!s.w,auto:!!s.auto,top:s.top,load:s.w?loadLabel(s.id):"",val:Math.max(0,Math.round(val))});}
 function goNext(){if(P.k>=P.st.length-1)return endPlayer(true);P.k++;setPhase("prep");}
 function advance(dir){
   if(dir===-1){
@@ -806,7 +919,8 @@ function drawPlayer(){const s=cur(),e=EX[s.id],C=2*Math.PI*120;const nx=P.st[P.k
   if(P.phase==="rest"){const n=nx;head=`<p class="small muted">Descanso</p><h2>Respire e solte os braços</h2>`;
     body=n?`<p class="cue">A seguir: <b>${esc(EX[n.id].n)}</b>${n.type==="set"?` · série ${n.set} de ${n.sets}`:""}</p><div class="row" style="justify-content:center;margin-top:12px"><button class="btn ghost sm" onclick="P.left+=15;P.dur+=15">+15 s</button><button class="btn primary sm" onclick="advance()">Pular descanso</button></div>`:"";}
   else{head=`<p class="small muted">${P.phase==="prep"?(P.k===0?"Prepare-se":"A seguir"):s.type==="set"?`Série ${s.set} de ${s.sets}`:esc(P.title)}</p><h2>${esc(e.n)}</h2>${s.side?`<span class="side">${s.side}</span>`:""}${s.type==="set"&&s.sides===2?`<span class="side">cada lado</span>`:""}`;
-    body=`<p class="cue">${esc(e.cue)}</p>${e.p?`<p class="small muted" style="margin-top:6px">Nível ${lvl().n.toLowerCase()}: ${esc(e.p[lvl().i])}</p>`:""}${nx&&P.phase==="work"?`<p class="xs muted" style="margin-top:8px">Depois: ${esc(EX[nx.id].n)}</p>`:""}`;}
+    const ld=s.w&&(P.phase==="set"||P.phase==="prep")?`<div class="loadbox"><span>Carga: <b>${esc(loadLabel(s.id))}</b></span>${e.eq==="bb"&&combos().length>1?`<span class="lb"><button class="round sm" onclick="loadAdj('${s.id}',-1)" aria-label="Menos peso">−</button><button class="round sm" onclick="loadAdj('${s.id}',1)" aria-label="Mais peso">+</button></span>`:""}</div>`:"";
+    body=`${ld}<p class="cue">${esc(e.cue)}</p>${e.p?`<p class="small muted" style="margin-top:6px">Nível ${lvl().n.toLowerCase()}: ${esc(e.p[lvl().i])}</p>`:""}${nx&&P.phase==="work"?`<p class="xs muted" style="margin-top:8px">Depois: ${esc(EX[nx.id].n)}</p>`:""}`;}
   if(isRep){center=`<p class="small muted" style="text-align:center;margin-top:16px">Meta: ${s.target} repetições${s.sides===2?" de cada lado":""}. Quantas você fez?</p>
     <div class="stepper"><button class="round" onclick="P.val=Math.max(0,P.val-1);$('#p-val').textContent=P.val" aria-label="Menos uma">−</button><output id="p-val" aria-live="polite">${P.val}</output><button class="round" onclick="P.val++;$('#p-val').textContent=P.val" aria-label="Mais uma">+</button></div>`;
     mainBtn=`<button class="round big" onclick="advance()" aria-label="Série feita"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12l5 5 9-10"/></svg></button>`;}
@@ -825,7 +939,7 @@ function keys(ev){if(!P||!$("#dlg").hidden)return;if(ev.key===" "){ev.preventDef
   else if(P.phase==="set"&&cur().unit!=="s"&&(ev.key==="ArrowUp"||ev.key==="ArrowDown")){ev.preventDefault();P.val=Math.max(0,P.val+(ev.key==="ArrowUp"?1:-1));$("#p-val").textContent=P.val;}}
 function endPlayer(completed,sure){
   if(!completed&&!sure&&P.elapsed>20){ask("Sair agora? O treino não será marcado como feito.",()=>endPlayer(false,true));return;}
-  cancelAnimationFrame(P.raf);wake(false);try{speechSynthesis.cancel();}catch(e){}document.removeEventListener("keydown",keys);$("#player").remove();document.body.style.overflow="";
+  cancelAnimationFrame(P.raf);wake(false);acRelease(0);try{speechSynthesis.cancel();}catch(e){}document.removeEventListener("keydown",keys);$("#player").remove();document.body.style.overflow="";
   if(completed){speak("Treino concluído. Muito bem.");const l=getLesson(P.key);
     window.__last={k:P.key,p:l&&l.p?l.p.slug:undefined,n:l&&l.p?l.n:undefined,title:P.title,date:today(),sec:Math.round(P.elapsed),feel:0,note:"",log:P.log};P=null;go("#fim");}
   else{P=null;render();}}
@@ -850,13 +964,14 @@ function render(){
   else if(h==="nutricao"){html=S15();tab="guia";}
   else if(h==="guia"){html=S17();tab="guia";}
   else if(h==="perfil"){html=S09();tab="perfil";}
+  else if(h==="equipamentos"){html=S18();tab="perfil";}
   else html=notFound();
   if(html===undefined)return;
   $("#app").innerHTML=html;$("#nav").style.display=h==="quiz"?"none":"";
   document.querySelectorAll(".nav a").forEach(a=>{if(a.dataset.tab===tab)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});}
 let lastHash=location.hash;
 window.addEventListener("hashchange",()=>{if(P)endPlayer(false,true);if(location.hash!=="#quiz")Q=Q&&Q.built?Q:null;if(location.hash!=="#montar")MB=MB;render();if(location.hash!==lastHash){window.scrollTo(0,0);lastHash=location.hash;}});
-render();
+audioMode();render();
 if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost")){try{navigator.serviceWorker.register("sw.js").catch(()=>{});}catch(e){}}
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
 </script>
